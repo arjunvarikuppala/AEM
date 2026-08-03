@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, ArrowRight, Building2, Tag, X, ExternalLink, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
@@ -10,6 +10,23 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const filters = ["All", "Drainage & Utilities", "Earthmoving", "Commercial", "Roadways", "Survey & Leveling"];
+
+  // ESC key listener and body scroll lock for project detail modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setSelectedProject(null);
+    };
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedProject]);
 
   const projects = [
     {
@@ -123,19 +140,19 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="pt-32 pb-20 min-h-screen">
-      <section className="container mx-auto px-6 mb-12 text-center">
+    <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 min-h-screen">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-10 sm:mb-12 text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-sm md:text-base uppercase tracking-[0.4em] text-[#F4B400] font-semibold mb-4"
+          className="text-xs sm:text-sm uppercase tracking-[0.3em] text-[#F4B400] font-semibold mb-3"
         >
           Safety. Quality. Trust.
         </motion.p>
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-extrabold mb-6"
+          className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight"
         >
           Featured <span className="text-[#F4B400]">Projects</span>
         </motion.h1>
@@ -143,7 +160,7 @@ export default function ProjectsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light"
+          className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto font-normal leading-relaxed"
         >
           Proven track record of landmark excavation, pipeline laying, and earthmoving projects across Telangana.
         </motion.p>
@@ -153,7 +170,7 @@ export default function ProjectsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mt-8"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8"
         >
           {filters.map(filter => {
             const count = getCategoryCount(filter);
@@ -161,10 +178,10 @@ export default function ProjectsPage() {
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 ${
+                className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] ${
                   activeFilter === filter 
-                    ? "bg-[#F4B400] text-black shadow-[0_0_20px_rgba(244,180,0,0.3)] scale-105" 
-                    : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                    ? "bg-[#F4B400] text-black shadow-[0_4px_20px_rgba(244,180,0,0.3)] scale-105" 
+                    : "bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 <span>{filter}</span>
@@ -180,10 +197,10 @@ export default function ProjectsPage() {
       </section>
 
       {/* Projects Grid */}
-      <section className="container mx-auto px-6">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (
@@ -195,51 +212,56 @@ export default function ProjectsPage() {
                 transition={{ duration: 0.3 }}
                 key={project.id}
                 onClick={() => setSelectedProject(project)}
-                className="relative group overflow-hidden rounded-2xl bg-[#121318] border border-white/10 hover:border-[#F4B400]/40 shadow-xl transition-all duration-300 flex flex-col cursor-pointer"
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedProject(project); }}
+                tabIndex={0}
+                role="button"
+                aria-label={`View details for ${project.title}`}
+                className="relative group overflow-hidden rounded-2xl bg-[#141414] border border-white/10 hover:border-[#F4B400]/40 shadow-xl transition-all duration-300 flex flex-col cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
               >
                 {/* Image Container */}
-                <div className="relative w-full h-56 overflow-hidden bg-black/40">
+                <div className="relative w-full h-48 xs:h-56 overflow-hidden bg-black/40">
                   <img 
                     src={project.image} 
                     alt={project.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-[#F4B400] border border-[#F4B400]/30 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                  <div className="absolute top-3.5 left-3.5">
+                    <span className="px-3 py-1 bg-black/80 backdrop-blur-md text-[#F4B400] border border-[#F4B400]/30 rounded-full text-[10px] font-bold uppercase tracking-wider">
                       {project.category}
                     </span>
                   </div>
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 flex flex-col flex-grow justify-between">
+                <div className="p-5 sm:p-6 flex flex-col flex-grow justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#F4B400] transition-colors leading-snug">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2.5 group-hover:text-[#F4B400] transition-colors leading-snug">
                       {project.title}
                     </h3>
                     
-                    <div className="space-y-1.5 mb-4 text-xs text-gray-400">
+                    <div className="space-y-1.5 mb-3.5 text-xs text-gray-300">
                       <p className="flex items-center gap-2">
                         <MapPin size={14} className="text-[#F4B400] shrink-0" />
-                        <span>{project.location}</span>
+                        <span className="truncate">{project.location}</span>
                       </p>
                       <p className="flex items-center gap-2">
                         <Building2 size={14} className="text-[#F4B400] shrink-0" />
-                        <span>Client: <strong className="text-gray-200 font-medium">{project.client}</strong></span>
+                        <span className="truncate">Client: <strong className="text-gray-200 font-medium">{project.client}</strong></span>
                       </p>
                     </div>
 
-                    <div className="p-3 bg-white/5 rounded-xl border border-white/5 text-xs text-gray-300 mb-6">
+                    <div className="p-3 bg-white/5 rounded-xl border border-white/5 text-xs text-gray-300 mb-5">
                       <span className="text-[#F4B400] font-semibold block mb-1">Scope of Work:</span>
-                      <p className="line-clamp-2 text-gray-400">{project.scope}</p>
+                      <p className="line-clamp-2 text-gray-300">{project.scope}</p>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                  <div className="pt-3 border-t border-white/5 flex items-center justify-between">
                     <span className="text-xs font-semibold text-[#F4B400] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1.5">
                       View Details & Scope <ArrowRight size={14} />
                     </span>
-                    <span className="p-1.5 rounded-lg bg-white/5 text-gray-400 group-hover:text-white group-hover:bg-[#F4B400] group-hover:text-black transition-colors">
+                    <span className="p-1.5 rounded-lg bg-white/5 text-gray-400 group-hover:text-black group-hover:bg-[#F4B400] transition-colors">
                       <ExternalLink size={14} />
                     </span>
                   </div>
@@ -265,25 +287,26 @@ export default function ProjectsPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#121318] border border-white/15 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl relative my-8"
+              className="bg-[#141414] border border-white/15 rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl relative my-auto"
             >
               {/* Close Button */}
               <button 
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/60 text-white hover:text-[#F4B400] transition-colors border border-white/10"
+                className="absolute top-3.5 right-3.5 z-20 p-2.5 rounded-full bg-black/70 text-white hover:text-[#F4B400] transition-colors border border-white/10 min-w-[40px] min-h-[40px] flex items-center justify-center"
+                aria-label="Close details dialog"
               >
                 <X size={20} />
               </button>
 
               {/* Modal Image */}
-              <div className="relative w-full h-72 md:h-80 overflow-hidden bg-black">
+              <div className="relative w-full h-56 sm:h-72 md:h-80 overflow-hidden bg-black">
                 <img 
                   src={selectedProject.image} 
                   alt={selectedProject.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121318] via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 sm:left-6">
                   <span className="px-3 py-1 bg-[#F4B400] text-black font-bold uppercase rounded-md text-xs tracking-wider">
                     {selectedProject.category}
                   </span>
@@ -291,44 +314,44 @@ export default function ProjectsPage() {
               </div>
 
               {/* Modal Content */}
-              <div className="p-6 md:p-8">
-                <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4">
+              <div className="p-5 sm:p-8">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white mb-4 leading-snug">
                   {selectedProject.title}
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-5 p-3.5 sm:p-4 bg-white/5 rounded-xl border border-white/5">
                   <div>
-                    <span className="text-xs text-gray-400 uppercase tracking-wider block mb-1">Location</span>
-                    <p className="text-sm font-semibold text-white flex items-center gap-1.5">
-                      <MapPin size={16} className="text-[#F4B400]" /> {selectedProject.location}
+                    <span className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">Location</span>
+                    <p className="text-xs sm:text-sm font-semibold text-white flex items-center gap-1.5">
+                      <MapPin size={15} className="text-[#F4B400] shrink-0" /> {selectedProject.location}
                     </p>
                   </div>
                   <div>
-                    <span className="text-xs text-gray-400 uppercase tracking-wider block mb-1">Client Authority</span>
-                    <p className="text-sm font-semibold text-white flex items-center gap-1.5">
-                      <Building2 size={16} className="text-[#F4B400]" /> {selectedProject.client}
+                    <span className="text-[11px] text-gray-400 uppercase tracking-wider block mb-1">Client Authority</span>
+                    <p className="text-xs sm:text-sm font-semibold text-white flex items-center gap-1.5">
+                      <Building2 size={15} className="text-[#F4B400] shrink-0" /> {selectedProject.client}
                     </p>
                   </div>
                 </div>
 
-                <div className="mb-8">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#F4B400] mb-2 flex items-center gap-2">
+                <div className="mb-6">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#F4B400] mb-2 flex items-center gap-2">
                     <CheckCircle2 size={16} /> Detailed Scope of Work
                   </h3>
-                  <p className="text-gray-300 leading-relaxed text-sm md:text-base bg-white/[0.02] p-4 rounded-xl border border-white/5">
+                  <p className="text-gray-300 leading-relaxed text-xs sm:text-sm md:text-base bg-white/[0.02] p-4 rounded-xl border border-white/5">
                     {selectedProject.scope}
                   </p>
                 </div>
 
                 {/* Modal Footer CTA */}
-                <div className="flex flex-col sm:flex-row gap-4 items-center justify-between pt-6 border-t border-white/10">
-                  <span className="text-xs text-gray-400">
+                <div className="flex flex-col sm:flex-row gap-3.5 items-center justify-between pt-5 border-t border-white/10">
+                  <span className="text-xs text-gray-300 text-center sm:text-left">
                     Need heavy machinery or execution for a similar infrastructure project?
                   </span>
                   <Link
                     href="/request-quote"
                     onClick={() => setSelectedProject(null)}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#F4B400] text-black font-bold text-xs uppercase tracking-wider hover:bg-[#ffc61a] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(244,180,0,0.2)]"
+                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#F4B400] text-black font-bold text-xs uppercase tracking-wider hover:bg-[#d69f00] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(244,180,0,0.3)] min-h-[48px]"
                   >
                     Request Similar Project <ArrowRight size={16} />
                   </Link>

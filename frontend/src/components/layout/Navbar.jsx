@@ -20,14 +20,31 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is active
+  // Lock body scroll when mobile menu is active & listen for ESC key
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
     } else {
       document.body.style.overflow = "unset";
     }
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isMobileMenuOpen]);
+
+  // Close mobile menu automatically when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -42,24 +59,24 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[#0A0A0A]/85 backdrop-blur-xl border-b border-white/10 py-3.5 shadow-2xl shadow-black/50"
-          : "bg-gradient-to-b from-black/80 to-transparent py-5"
+          ? "bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/10 py-3 shadow-2xl shadow-black/50"
+          : "bg-gradient-to-b from-black/90 via-black/50 to-transparent py-4"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex justify-between items-center">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded-lg p-1"
+          className="flex items-center gap-2.5 sm:gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded-lg p-1"
           aria-label="Aadhya Earth Movers Homepage"
         >
           <img
             src="/images/aem-logo.jpeg"
             alt="Aadhya Earth Movers official company logo"
-            className="h-10 w-auto rounded object-contain border border-white/10 group-hover:border-[#F4B400]/50 transition-all"
+            className="h-9 w-auto sm:h-10 rounded object-contain border border-white/10 group-hover:border-[#F4B400]/50 transition-all"
           />
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-wide uppercase text-white group-hover:text-[#F4B400] transition-colors leading-tight">
+            <span className="text-sm xs:text-base sm:text-lg font-bold tracking-wide uppercase text-white group-hover:text-[#F4B400] transition-colors leading-tight truncate">
               Aadhya Earth Movers
             </span>
             <span className="text-[10px] text-gray-400 font-mono tracking-widest uppercase hidden sm:block">
@@ -69,7 +86,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7" aria-label="Main Navigation">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main Navigation">
           {navLinks.map((link) => {
             const isActive =
               link.href === "/" ? pathname === "/" : pathname?.startsWith(link.href);
@@ -77,7 +94,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative py-1 text-xs font-semibold tracking-wider uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded px-2 ${
+                className={`relative py-1 text-xs font-semibold tracking-wider uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded px-2.5 ${
                   isActive
                     ? "text-[#F4B400]"
                     : "text-gray-300 hover:text-white"
@@ -88,7 +105,7 @@ export default function Navbar() {
                 {isActive && (
                   <motion.div
                     layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#F4B400] rounded-full"
+                    className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-[#F4B400] rounded-full"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -110,7 +127,7 @@ export default function Navbar() {
         {/* Mobile Menu Toggle Button */}
         <button
           type="button"
-          className="lg:hidden text-gray-200 hover:text-white z-50 p-2 rounded-lg border border-white/10 bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
+          className="lg:hidden text-gray-200 hover:text-white z-50 min-h-[44px] min-w-[44px] flex items-center justify-center p-2 rounded-lg border border-white/10 bg-white/5 active:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-navigation"
@@ -128,9 +145,9 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-[65px] z-40 bg-[#0A0A0A]/95 backdrop-blur-2xl border-t border-white/10 flex flex-col p-6 overflow-y-auto lg:hidden"
+              className="fixed inset-0 top-[60px] z-40 bg-[#0A0A0A]/95 backdrop-blur-2xl border-t border-white/10 flex flex-col p-5 sm:p-6 overflow-y-auto lg:hidden"
             >
-              <div className="flex flex-col gap-3 mt-4">
+              <div className="flex flex-col gap-2.5 mt-2">
                 {navLinks.map((link) => {
                   const isActive =
                     link.href === "/" ? pathname === "/" : pathname?.startsWith(link.href);
@@ -138,7 +155,7 @@ export default function Navbar() {
                     <Link
                       key={link.name}
                       href={link.href}
-                      className={`text-lg font-semibold tracking-wide uppercase px-4 py-3 rounded-xl border transition-colors ${
+                      className={`text-base sm:text-lg font-semibold tracking-wide uppercase px-4 py-3 rounded-xl border min-h-[48px] flex items-center transition-colors ${
                         isActive
                           ? "bg-[#F4B400]/10 border-[#F4B400]/40 text-[#F4B400]"
                           : "border-white/5 text-gray-200 hover:bg-white/5 hover:text-white"
@@ -150,7 +167,7 @@ export default function Navbar() {
                     </Link>
                   );
                 })}
-                <div className="pt-6 border-t border-white/10 mt-2">
+                <div className="pt-5 border-t border-white/10 mt-2">
                   <Link
                     href="/request-quote"
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -159,7 +176,7 @@ export default function Navbar() {
                     <Button
                       variant="primary"
                       size="lg"
-                      className="w-full font-bold uppercase tracking-wider justify-center"
+                      className="w-full min-h-[48px] font-bold uppercase tracking-wider justify-center"
                     >
                       Get Quote
                     </Button>

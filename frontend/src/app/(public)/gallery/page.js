@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, ChevronLeft, ChevronRight, MapPin, Tag, Play, Film } from "lucide-react";
 
@@ -9,6 +9,32 @@ export default function GalleryPage() {
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const categories = ["All", "Excavation & Grading", "Tipper Fleet", "Drainage & Utilities", "Videos"];
+
+  // Keyboard navigation & body scroll lock for Lightbox
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedIndex === null) return;
+      if (e.key === "Escape") setSelectedIndex(null);
+      if (e.key === "ArrowLeft") {
+        setSelectedIndex((prev) => (prev === 0 ? filteredImages.length - 1 : prev - 1));
+      }
+      if (e.key === "ArrowRight") {
+        setSelectedIndex((prev) => (prev === filteredImages.length - 1 ? 0 : prev + 1));
+      }
+    };
+
+    if (selectedIndex !== null) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedIndex]);
 
   const galleryItems = [
     {
@@ -187,12 +213,12 @@ export default function GalleryPage() {
   const selectedImageObj = selectedIndex !== null ? filteredImages[selectedIndex] : null;
 
   return (
-    <div className="pt-32 pb-20 min-h-screen">
-      <section className="container mx-auto px-6 mb-16 text-center">
+    <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 min-h-screen">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-10 sm:mb-14 text-center">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-extrabold mb-6"
+          className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight"
         >
           Project <span className="text-[#F4B400]">Gallery</span>
         </motion.h1>
@@ -200,7 +226,7 @@ export default function GalleryPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light"
+          className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto font-normal leading-relaxed"
         >
           Authentic photography & video reels from our active sites — showcasing earthmoving, pipeline installation, and heavy fleet operations.
         </motion.p>
@@ -210,7 +236,7 @@ export default function GalleryPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mt-10"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8"
         >
           {categories.map((cat) => {
             const count = cat === "All" ? galleryItems.length : galleryItems.filter(i => i.category === cat).length;
@@ -221,10 +247,10 @@ export default function GalleryPage() {
                   setActiveCategory(cat);
                   setSelectedIndex(null);
                 }}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 ${
+                className={`px-4 sm:px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2 min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] ${
                   activeCategory === cat 
-                    ? "bg-[#F4B400] text-black shadow-[0_0_20px_rgba(244,180,0,0.3)] scale-105" 
-                    : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 hover:text-white"
+                    ? "bg-[#F4B400] text-black shadow-[0_4px_20px_rgba(244,180,0,0.3)] scale-105" 
+                    : "bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 <span>{cat}</span>
@@ -240,41 +266,47 @@ export default function GalleryPage() {
       </section>
 
       {/* Grid */}
-      <section className="container mx-auto px-6">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 sm:gap-6 space-y-5 sm:space-y-6">
           {filteredImages.map((img, idx) => (
             <motion.div
               key={img.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: (idx % 3) * 0.1 }}
-              className={`relative group overflow-hidden rounded-2xl break-inside-avoid bg-[#121318] border border-white/10 cursor-pointer ${img.aspect}`}
+              transition={{ delay: (idx % 3) * 0.05 }}
+              className={`relative group overflow-hidden rounded-2xl break-inside-avoid bg-[#141414] border border-white/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] ${img.aspect}`}
               onClick={() => setSelectedIndex(idx)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setSelectedIndex(idx); }}
+              tabIndex={0}
+              role="button"
+              aria-label={`View ${img.title}`}
             >
               {img.type === "image" ? (
                 <img 
                   src={img.src} 
                   alt={img.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full relative overflow-hidden bg-black">
                   <img 
                     src={img.poster || img.src} 
                     alt={img.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                    loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/20 transition-colors" />
+                  <div className="absolute inset-0 bg-black/30 transition-colors" />
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-5 sm:p-6 flex flex-col justify-end">
                 <span className="inline-block text-[#F4B400] text-[10px] font-bold uppercase tracking-widest mb-1">
                   {img.category}
                 </span>
-                <h3 className="text-lg font-bold text-white mb-2">{img.title}</h3>
+                <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">{img.title}</h3>
                 <p className="text-gray-300 text-xs flex items-center gap-1.5">
-                  <MapPin size={12} className="text-[#F4B400]" /> {img.location}
+                  <MapPin size={12} className="text-[#F4B400] shrink-0" /> {img.location}
                 </p>
               </div>
             </motion.div>
@@ -289,7 +321,7 @@ export default function GalleryPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-between p-4 md:p-8 backdrop-blur-md"
+            className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-between p-4 sm:p-6 md:p-8 backdrop-blur-md overflow-y-auto"
             onClick={() => setSelectedIndex(null)}
           >
             {/* Top Bar */}
@@ -298,34 +330,36 @@ export default function GalleryPage() {
                 <span className="px-3 py-1 bg-[#F4B400] text-black text-xs font-bold uppercase rounded-sm">
                   {selectedImageObj.category}
                 </span>
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-gray-300">
                   {selectedIndex + 1} of {filteredImages.length}
                 </span>
               </div>
               <button 
-                className="p-2.5 rounded-full bg-white/10 text-white hover:text-[#F4B400] transition-colors border border-white/10"
+                className="p-2.5 rounded-full bg-white/10 text-white hover:text-[#F4B400] transition-colors border border-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 onClick={() => setSelectedIndex(null)}
+                aria-label="Close media dialog"
               >
-                <X size={24} />
+                <X size={22} />
               </button>
             </div>
 
             {/* Main Content with Nav */}
-            <div className="relative w-full max-w-5xl h-[65vh] flex items-center justify-center my-auto">
+            <div className="relative w-full max-w-5xl h-[55vh] sm:h-[65vh] flex items-center justify-center my-auto">
               <button
                 onClick={handlePrev}
-                className="absolute left-2 md:left-6 z-20 p-3 rounded-full bg-black/60 text-white hover:text-[#F4B400] hover:bg-black transition-all border border-white/10"
+                className="absolute left-1 sm:left-4 z-20 p-2.5 sm:p-3 rounded-full bg-black/70 text-white hover:text-[#F4B400] hover:bg-black transition-all border border-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Previous item"
               >
-                <ChevronLeft size={28} />
+                <ChevronLeft size={24} />
               </button>
 
               {selectedImageObj.type === "image" ? (
                 <motion.img 
                   key={selectedImageObj.id}
-                  initial={{ scale: 0.9, opacity: 0 }}
+                  initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.9, opacity: 0 }}
-                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                   src={selectedImageObj.src} 
                   alt={selectedImageObj.title} 
                   className="max-w-full max-h-full object-contain rounded-xl shadow-2xl border border-white/10"
@@ -334,10 +368,10 @@ export default function GalleryPage() {
               ) : (
                 <motion.div
                   key={selectedImageObj.id}
-                  initial={{ scale: 0.9, opacity: 0 }}
+                  initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.9, opacity: 0 }}
-                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                   className="relative max-w-4xl w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -361,12 +395,12 @@ export default function GalleryPage() {
                       className="absolute inset-0 w-full h-full object-cover opacity-25 blur-sm" 
                     />
                     <div className="relative z-10 flex flex-col items-center">
-                      <div className="w-16 h-16 rounded-full bg-[#F4B400]/20 border border-[#F4B400] text-[#F4B400] flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(244,180,0,0.4)]">
-                        <Play size={32} className="fill-[#F4B400] ml-1" />
+                      <div className="w-14 h-14 rounded-full bg-[#F4B400]/20 border border-[#F4B400] text-[#F4B400] flex items-center justify-center mb-3 shadow-[0_0_25px_rgba(244,180,0,0.4)]">
+                        <Play size={28} className="fill-[#F4B400] ml-1" />
                       </div>
-                      <h4 className="text-xl font-bold text-white mb-2">{selectedImageObj.title}</h4>
-                      <p className="text-xs text-gray-300 max-w-md mb-4">{selectedImageObj.description}</p>
-                      <span className="px-3.5 py-1.5 bg-[#F4B400]/10 border border-[#F4B400]/40 text-[#F4B400] text-xs font-semibold rounded-full flex items-center gap-2">
+                      <h4 className="text-lg font-bold text-white mb-1.5">{selectedImageObj.title}</h4>
+                      <p className="text-xs text-gray-300 max-w-md mb-3">{selectedImageObj.description}</p>
+                      <span className="px-3 py-1 bg-[#F4B400]/10 border border-[#F4B400]/40 text-[#F4B400] text-xs font-semibold rounded-full flex items-center gap-2">
                         <Film size={14} /> Site Video Recording • {selectedImageObj.location}
                       </span>
                     </div>
@@ -376,22 +410,23 @@ export default function GalleryPage() {
 
               <button
                 onClick={handleNext}
-                className="absolute right-2 md:right-6 z-20 p-3 rounded-full bg-black/60 text-white hover:text-[#F4B400] hover:bg-black transition-all border border-white/10"
+                className="absolute right-1 sm:right-4 z-20 p-2.5 sm:p-3 rounded-full bg-black/70 text-white hover:text-[#F4B400] hover:bg-black transition-all border border-white/10 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Next item"
               >
-                <ChevronRight size={28} />
+                <ChevronRight size={24} />
               </button>
             </div>
 
             {/* Bottom Caption Box */}
             <div 
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-4xl bg-[#121318] border border-white/10 rounded-xl p-5 text-center shadow-2xl"
+              className="w-full max-w-4xl bg-[#141414] border border-white/10 rounded-xl p-4 sm:p-5 text-center shadow-2xl my-2"
             >
-              <h3 className="text-xl font-bold text-white mb-1">{selectedImageObj.title}</h3>
-              <p className="text-xs text-[#F4B400] mb-2 flex items-center justify-center gap-1">
+              <h3 className="text-base sm:text-xl font-bold text-white mb-1">{selectedImageObj.title}</h3>
+              <p className="text-xs text-[#F4B400] mb-2 flex items-center justify-center gap-1 font-medium">
                 <MapPin size={12} /> {selectedImageObj.location}
               </p>
-              <p className="text-gray-300 text-sm">{selectedImageObj.description}</p>
+              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">{selectedImageObj.description}</p>
             </div>
           </motion.div>
         )}

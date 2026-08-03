@@ -20,30 +20,30 @@ export default function Footer() {
 
   return (
     <footer
-      className="bg-[#0C0C0C] border-t border-white/10 pt-16 pb-12 relative overflow-hidden text-gray-300"
+      className="bg-[#0A0A0A] border-t border-white/10 pt-12 sm:pt-16 pb-8 sm:pb-12 relative overflow-hidden text-gray-300"
       aria-label="Site Footer"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-12 sm:mb-16">
           {/* Brand */}
           <div className="flex flex-col">
             <Link
               href="/"
-              className="flex items-center gap-3 mb-5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded-lg w-fit"
+              className="flex items-center gap-3 mb-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded-lg w-fit p-1"
             >
               <img
                 src="/images/aem-logo.jpeg"
                 alt="Aadhya Earth Movers logo"
                 className="w-10 h-10 rounded object-contain border border-white/10 group-hover:border-[#F4B400]/50 transition-all"
               />
-              <span className="text-lg font-bold tracking-wide uppercase text-white group-hover:text-[#F4B400] transition-colors">
+              <span className="text-base sm:text-lg font-bold tracking-wide uppercase text-white group-hover:text-[#F4B400] transition-colors leading-tight">
                 Aadhya Earth Movers
               </span>
             </Link>
-            <p className="text-sm text-gray-400 mb-6 leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-300 mb-5 leading-relaxed">
               Hyderabad&apos;s trusted earthmoving, rock breaking, road grading, and heavy machinery contractor. Building solid foundations with precision and safety.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2.5">
               {[
                 { name: "Facebook", href: "#", path: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
                 { name: "Twitter", href: "#", path: "M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" },
@@ -53,7 +53,7 @@ export default function Footer() {
                   key={social.name}
                   href={social.href}
                   aria-label={`Follow us on ${social.name}`}
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#F4B400] hover:border-[#F4B400]/30 hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
+                  className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-[#F4B400] hover:border-[#F4B400]/40 hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -75,32 +75,32 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-l-2 border-[#F4B400] pl-3">
+            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
               Navigation
             </h2>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm">
               <li>
-                <Link href="/about" className="text-gray-400 hover:text-[#F4B400] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                <Link href="/about" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
                   About Company
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-gray-400 hover:text-[#F4B400] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                <Link href="/services" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
                   Services & Fleet
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="text-gray-400 hover:text-[#F4B400] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                <Link href="/projects" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
                   Featured Projects
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="text-gray-400 hover:text-[#F4B400] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                <Link href="/gallery" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
                   Media & Site Photos
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-gray-400 hover:text-[#F4B400] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                <Link href="/careers" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
                   Careers & Hiring
                 </Link>
               </li>
@@ -109,31 +109,31 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-l-2 border-[#F4B400] pl-3">
+            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
               Direct Contact
             </h2>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin className="text-[#F4B400] mt-0.5 shrink-0" size={18} />
-                <span className="text-gray-400 leading-snug">
+            <ul className="space-y-3 text-xs sm:text-sm">
+              <li className="flex items-start gap-2.5">
+                <MapPin className="text-[#F4B400] mt-0.5 shrink-0" size={17} />
+                <span className="text-gray-300 leading-snug">
                   Near Outer Ring Road, Hyderabad, Telangana, India
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="text-[#F4B400] shrink-0" size={18} />
-                <a href="tel:+918179675631" className="text-gray-400 hover:text-white transition-colors">
+              <li className="flex items-center gap-2.5">
+                <Phone className="text-[#F4B400] shrink-0" size={17} />
+                <a href="tel:+918179675631" className="text-gray-300 hover:text-white transition-colors py-0.5">
                   +91 81796 75631
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="text-[#F4B400] shrink-0" size={18} />
-                <a href="tel:+918008543529" className="text-gray-400 hover:text-white transition-colors">
+              <li className="flex items-center gap-2.5">
+                <Phone className="text-[#F4B400] shrink-0" size={17} />
+                <a href="tel:+918008543529" className="text-gray-300 hover:text-white transition-colors py-0.5">
                   +91 80085 43529
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="text-[#F4B400] shrink-0" size={18} />
-                <a href="mailto:prashanthvk494@gmail.com" className="text-gray-400 hover:text-white transition-colors">
+              <li className="flex items-center gap-2.5">
+                <Mail className="text-[#F4B400] shrink-0" size={17} />
+                <a href="mailto:prashanthvk494@gmail.com" className="text-gray-300 hover:text-white transition-colors py-0.5 truncate">
                   prashanthvk494@gmail.com
                 </a>
               </li>
@@ -142,26 +142,26 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-6 border-l-2 border-[#F4B400] pl-3">
+            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
               Updates
             </h2>
-            <p className="text-sm text-gray-400 mb-4 leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-300 mb-4 leading-relaxed">
               Get updates on equipment availability and ongoing site operations.
             </p>
             {subscribed ? (
-              <div className="flex items-center gap-2 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-400 text-sm">
-                <CheckCircle2 size={18} />
+              <div className="flex items-center gap-2 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs sm:text-sm">
+                <CheckCircle2 size={16} />
                 <span>Thank you! Subscribed successfully.</span>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
                 <div className="relative">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 px-3.5 py-2.5 rounded-lg text-sm focus:outline-none focus:border-[#F4B400] focus:ring-1 focus:ring-[#F4B400] transition-colors"
+                    className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-colors min-h-[44px]"
                     required
                     aria-label="Email address for newsletter"
                   />
@@ -171,7 +171,7 @@ export default function Footer() {
                   variant="primary"
                   size="sm"
                   rightIcon={<ArrowRight size={16} />}
-                  className="w-full uppercase font-bold text-xs tracking-wider"
+                  className="w-full uppercase font-bold text-xs tracking-wider min-h-[44px]"
                 >
                   Subscribe
                 </Button>
@@ -181,15 +181,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-          <p>
+        <div className="border-t border-white/10 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-400">
+          <p className="text-center sm:text-left">
             &copy; {new Date().getFullYear()} Aadhya Earth Movers. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+          <div className="flex gap-4 sm:gap-6">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors py-1">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
+            <Link href="/terms" className="hover:text-white transition-colors py-1">
               Terms & Conditions
             </Link>
           </div>
