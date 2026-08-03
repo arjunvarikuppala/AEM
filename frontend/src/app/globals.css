@@ -2,19 +2,32 @@
 
 @theme {
   --color-brand-yellow: #F4B400;
+  --color-brand-yellow-hover: #D69F00;
   --color-brand-black: #111111;
   --color-brand-bg: #0A0A0A;
+  --color-brand-surface: #161616;
+  --color-brand-border: rgba(255, 255, 255, 0.08);
   --color-brand-white: #FFFFFF;
-  --color-brand-gray: #B8B8B8;
+  --color-brand-gray: #A3A3A3;
   --color-brand-green: #16A34A;
-  
-  --font-sans: var(--font-inter), sans-serif;
-  --font-heading: var(--font-outfit), sans-serif;
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-outfit), system-ui, -apple-system, sans-serif;
 }
 
 :root {
   --background: #0A0A0A;
-  --foreground: #FFFFFF;
+  --foreground: #F5F5F5;
+  --card: #141414;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --primary: #F4B400;
+  --primary-foreground: #000000;
+  --ring: #F4B400;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
@@ -22,21 +35,29 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-/* Glassmorphism utility */
-.glass {
-  background: rgba(17, 17, 17, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* Accessibility Focus Ring Defaults */
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
-/* Hide scrollbar for clean look */
+/* Glassmorphism utility */
+.glass {
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -44,14 +65,14 @@ h1, h2, h3, h4, h5, h6 {
   background: #0A0A0A;
 }
 ::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: #262626;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #F4B400;
 }
 
-/* Gradient Borders */
+/* Gradient Borders & Accent Utilities */
 .border-gradient {
   position: relative;
   border: 1px solid transparent;
@@ -64,5 +85,16 @@ h1, h2, h3, h4, h5, h6 {
   z-index: -1;
   margin: -1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #F4B400, #111111);
+  background: linear-gradient(135deg, #F4B400, #161616);
 }
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

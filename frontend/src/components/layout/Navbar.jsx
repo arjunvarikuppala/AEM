@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Button } from "../ui/Button";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,11 +14,20 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 30);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is active
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -31,85 +41,131 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass py-4" : "bg-transparent py-6"
+        isScrolled
+          ? "bg-[#0A0A0A]/85 backdrop-blur-xl border-b border-white/10 py-3.5 shadow-2xl shadow-black/50"
+          : "bg-gradient-to-b from-black/80 to-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-6 lg:px-12 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 z-50">
+        <Link
+          href="/"
+          className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded-lg p-1"
+          aria-label="Aadhya Earth Movers Homepage"
+        >
           <img
             src="/images/aem-logo.jpeg"
-            alt="Aadhya Earth Movers logo"
-            className="h-10 w-auto object-contain"
+            alt="Aadhya Earth Movers official company logo"
+            className="h-10 w-auto rounded object-contain border border-white/10 group-hover:border-[#F4B400]/50 transition-all"
           />
-          <span className="text-xl font-bold tracking-wide uppercase text-white hidden sm:block">
-            Aadhya Earth Movers
-          </span>
+          <div className="flex flex-col">
+            <span className="text-lg font-bold tracking-wide uppercase text-white group-hover:text-[#F4B400] transition-colors leading-tight">
+              Aadhya Earth Movers
+            </span>
+            <span className="text-[10px] text-gray-400 font-mono tracking-widest uppercase hidden sm:block">
+              Earthwork & Infrastructure
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-7" aria-label="Main Navigation">
           {navLinks.map((link) => {
-            const isActive = link.href === "/" ? pathname === "/" : pathname?.startsWith(link.href);
+            const isActive =
+              link.href === "/" ? pathname === "/" : pathname?.startsWith(link.href);
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`transition-colors text-sm font-medium tracking-wide uppercase ${
-                  isActive ? "text-[#F4B400]" : "text-white hover:text-[#F4B400]"
+                className={`relative py-1 text-xs font-semibold tracking-wider uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] rounded px-2 ${
+                  isActive
+                    ? "text-[#F4B400]"
+                    : "text-gray-300 hover:text-white"
                 }`}
+                aria-current={isActive ? "page" : undefined}
               >
                 {link.name}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#F4B400] rounded-full"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </Link>
             );
           })}
-          <Link
-            href="/request-quote"
-            className="bg-[#F4B400] text-black px-6 py-2.5 rounded hover:bg-[#d69f00] transition-colors font-semibold flex items-center gap-2"
-          >
-            Get Quote
+          <Link href="/request-quote" tabIndex={-1}>
+            <Button
+              variant="primary"
+              size="sm"
+              rightIcon={<ArrowUpRight size={16} />}
+              className="ml-2 font-bold tracking-wider uppercase text-xs"
+            >
+              Get Quote
+            </Button>
           </Link>
         </nav>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle Button */}
         <button
-          className="lg:hidden text-white z-50 p-2"
+          type="button"
+          className="lg:hidden text-gray-200 hover:text-white z-50 p-2 rounded-lg border border-white/10 bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-navigation"
+          aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
         >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation Drawer */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
+              id="mobile-navigation"
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="absolute top-0 left-0 w-full h-screen bg-[#0A0A0A] flex flex-col items-center justify-center gap-8 z-40"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 top-[65px] z-40 bg-[#0A0A0A]/95 backdrop-blur-2xl border-t border-white/10 flex flex-col p-6 overflow-y-auto lg:hidden"
             >
-              {navLinks.map((link) => {
-                const isActive = link.href === "/" ? pathname === "/" : pathname?.startsWith(link.href);
-                return (
+              <div className="flex flex-col gap-3 mt-4">
+                {navLinks.map((link) => {
+                  const isActive =
+                    link.href === "/" ? pathname === "/" : pathname?.startsWith(link.href);
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`text-lg font-semibold tracking-wide uppercase px-4 py-3 rounded-xl border transition-colors ${
+                        isActive
+                          ? "bg-[#F4B400]/10 border-[#F4B400]/40 text-[#F4B400]"
+                          : "border-white/5 text-gray-200 hover:bg-white/5 hover:text-white"
+                      }`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
+                <div className="pt-6 border-t border-white/10 mt-2">
                   <Link
-                    key={link.name}
-                    href={link.href}
-                    className={`text-2xl transition-colors font-medium tracking-wide uppercase ${
-                      isActive ? "text-[#F4B400]" : "text-white hover:text-[#F4B400]"
-                    }`}
+                    href="/request-quote"
                     onClick={() => setIsMobileMenuOpen(false)}
+                    className="block w-full"
                   >
-                    {link.name}
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="w-full font-bold uppercase tracking-wider justify-center"
+                    >
+                      Get Quote
+                    </Button>
                   </Link>
-                );
-              })}
-              <Link
-                href="/request-quote"
-                className="bg-[#F4B400] text-black px-8 py-3 rounded text-xl font-semibold mt-4"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Get Quote
-              </Link>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -3,10 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, MessageSquare, FileText, Settings, LogOut, Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  MessageSquare,
+  FileText,
+  Settings,
+  LogOut,
+  Menu,
+  ChevronLeft,
+  ShieldAlert,
+} from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const pathname = usePathname();
 
   const navItems = [
@@ -17,64 +28,103 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="flex h-screen bg-[#0A0A0A] text-white overflow-hidden">
-      {/* Sidebar */}
-      <aside 
-        className={`${
+    <div className="flex h-screen bg-[#080808] text-white overflow-hidden font-sans">
+      {/* Desktop Sidebar */}
+      <aside
+        className={`hidden md:flex ${
           sidebarOpen ? "w-64" : "w-20"
-        } transition-all duration-300 bg-[#111111] border-r border-white/5 flex flex-col`}
+        } transition-all duration-300 bg-[#121212] border-r border-white/10 flex-col shrink-0 relative z-20`}
+        aria-label="Admin Sidebar Navigation"
       >
-        <div className="h-20 flex items-center justify-between px-4 border-b border-white/5">
+        {/* Sidebar Header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-white/10">
           {sidebarOpen && (
-            <span className="font-bold text-xl tracking-wider uppercase text-[#F4B400]">AEM Admin</span>
+            <Link href="/" className="flex items-center gap-2">
+              <span className="font-bold text-sm tracking-wider uppercase text-[#F4B400] font-mono">
+                AEM Admin
+              </span>
+            </Link>
           )}
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/5 rounded-full transition-colors text-gray-400 hover:text-white">
-            <Menu size={24} />
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+            className="p-1.5 hover:bg-white/10 rounded-lg transition-colors text-gray-400 hover:text-white mx-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
+          >
+            <ChevronLeft
+              size={20}
+              className={`transition-transform duration-300 ${
+                !sidebarOpen ? "rotate-180" : ""
+              }`}
+            />
           </button>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        {/* Navigation Items */}
+        <nav className="flex-1 p-3 space-y-1.5 overflow-y-auto">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link 
-                key={item.name} 
+              <Link
+                key={item.name}
                 href={item.href}
-                className={`flex items-center gap-4 px-4 py-3 rounded-lg transition-colors ${
-                  isActive 
-                    ? "bg-[#F4B400] text-black font-semibold" 
+                className={`flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400] ${
+                  isActive
+                    ? "bg-[#F4B400] text-black font-semibold shadow-[0_2px_12px_rgba(244,180,0,0.3)]"
                     : "text-gray-400 hover:bg-white/5 hover:text-white"
                 }`}
+                title={!sidebarOpen ? item.name : undefined}
+                aria-current={isActive ? "page" : undefined}
               >
-                <item.icon size={20} className="shrink-0" />
-                {sidebarOpen && <span>{item.name}</span>}
+                <item.icon size={18} className="shrink-0" />
+                {sidebarOpen && <span className="truncate">{item.name}</span>}
               </Link>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/5">
-          <button className="flex items-center gap-4 px-4 py-3 w-full text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
-            <LogOut size={20} className="shrink-0" />
+        {/* Sidebar Footer */}
+        <div className="p-3 border-t border-white/10">
+          <button
+            type="button"
+            className="flex items-center gap-3.5 px-3.5 py-2.5 w-full text-rose-400 hover:bg-rose-500/10 rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
+          >
+            <LogOut size={18} className="shrink-0" />
             {sidebarOpen && <span>Logout</span>}
           </button>
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col h-full overflow-hidden">
-        {/* Header */}
-        <header className="h-20 bg-[#111111] border-b border-white/5 flex items-center justify-end px-8">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-[#F4B400] text-black font-bold flex items-center justify-center">
+      {/* Main Container */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
+        {/* Header Bar */}
+        <header className="h-16 bg-[#121212] border-b border-white/10 flex items-center justify-between px-6 shrink-0">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              className="md:hidden p-2 rounded-lg bg-white/5 border border-white/10 text-gray-300"
+              onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              <Menu size={20} />
+            </button>
+            <h1 className="text-sm font-semibold uppercase tracking-wider text-gray-300">
+              Management Portal
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-[#F4B400] text-black font-bold text-xs flex items-center justify-center shadow-md">
               AD
             </div>
-            <span className="font-semibold text-sm">Admin User</span>
+            <span className="font-medium text-xs text-gray-300 hidden sm:inline">
+              Admin User
+            </span>
           </div>
         </header>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-8 bg-[#050505]">
+        {/* Content Body */}
+        <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-[#080808]">
           {children}
         </div>
       </main>
