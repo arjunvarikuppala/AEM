@@ -10,10 +10,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 bg-[#F4B400] rounded-sm flex items-center justify-center font-bold text-black text-xl">
-                AEM
-              </div>
+            <Link href="/" className="flex items-center gap-3 mb-6">
+              <img
+                src="/images/aem-logo.jpeg"
+                alt="Aadhya Earth Movers logo"
+                className="w-10 h-10 object-contain"
+              />
               <span className="text-xl font-bold tracking-wide uppercase text-white">
                 Aadhya Earth Movers
               </span>
@@ -43,7 +45,6 @@ export default function Footer() {
             <ul className="space-y-4">
               <li><Link href="/about" className="text-gray-400 hover:text-[#F4B400] transition-colors">About Us</Link></li>
               <li><Link href="/services" className="text-gray-400 hover:text-[#F4B400] transition-colors">Our Services</Link></li>
-              <li><Link href="/equipment" className="text-gray-400 hover:text-[#F4B400] transition-colors">Equipment</Link></li>
               <li><Link href="/projects" className="text-gray-400 hover:text-[#F4B400] transition-colors">Projects</Link></li>
               <li><Link href="/careers" className="text-gray-400 hover:text-[#F4B400] transition-colors">Careers</Link></li>
             </ul>
@@ -59,11 +60,15 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="text-[#F4B400] shrink-0" size={20} />
-                <span className="text-gray-400">+91 XXXXXXXXXX</span>
+                <span className="text-gray-400">+91 8179675631</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="text-[#F4B400] shrink-0" size={20} />
+                <span className="text-gray-400">+91 8008543529</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="text-[#F4B400] shrink-0" size={20} />
-                <span className="text-gray-400">info@aadhyaearthmovers.com</span>
+                <span className="text-gray-400">prashanthvk494@gmail.com</span>
               </li>
             </ul>
           </div>

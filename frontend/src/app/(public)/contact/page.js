@@ -77,7 +77,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Head Office</h4>
-                    <p className="text-gray-400 text-sm">Aadhya Earth Movers,<br/>Jubilee Hills, Hyderabad,<br/>Telangana, India 500033</p>
+                    <p className="text-gray-400 text-sm">Aadhya Earth Movers,<br/>Shankar Nagar PLOT NO 95/P, Hayatnagar, Hyderabad,<br/>Telangana, India 501505</p>
                   </div>
                 </div>
 
@@ -87,8 +87,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Phone</h4>
-                    <p className="text-gray-400 text-sm">+91 98765 43210</p>
-                    <p className="text-gray-400 text-sm">+91 91234 56789</p>
+                    <p className="text-gray-400 text-sm">+91 8179675631</p>
+                    <p className="text-gray-400 text-sm">+91 8008543529</p>
                   </div>
                 </div>
 
@@ -98,7 +98,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Email</h4>
-                    <p className="text-gray-400 text-sm">info@aadhyaearthmovers.com</p>
+                    <p className="text-gray-400 text-sm">prashanthvk@gmail.com</p>
                     <p className="text-gray-400 text-sm">sales@aadhyaearthmovers.com</p>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Working Hours</h4>
-                    <p className="text-gray-400 text-sm">Mon - Sat: 8:00 AM - 8:00 PM</p>
+                    <p className="text-gray-400 text-sm">Mon - Sat: 6:00 AM - 10:00 PM</p>
                     <p className="text-gray-400 text-sm">Sunday: Closed</p>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export default function ContactPage() {
       <section className="container mx-auto px-6 mt-20">
         <div className="h-[400px] rounded-xl overflow-hidden border border-white/5 bg-gray-900 relative">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d121808.7303038479!2d78.32420484542387!3d17.433877995305106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb90b46ebaa41b%3A0x88981f33f619056d!2sJubilee%20Hills%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1705607001234!5m2!1sen!2sin" 
+            src="https://www.google.com/maps?q=17.333122,78.616183&z=17&output=embed" 
             className="absolute inset-0 w-full h-full border-0" 
             allowFullScreen="" 
             loading="lazy" 

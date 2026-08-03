@@ -16,7 +16,7 @@ export default function Home() {
   const heroRef = useRef(null);
   const statsRef = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
-  
+
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
@@ -24,10 +24,10 @@ export default function Home() {
     setIsMounted(true);
     // Stats Counter Animation
     const stats = document.querySelectorAll('.stat-number');
-    
+
     stats.forEach(stat => {
       const target = parseInt(stat.getAttribute('data-target'));
-      
+
       ScrollTrigger.create({
         trigger: statsRef.current,
         start: "top 80%",
@@ -52,12 +52,12 @@ export default function Home() {
       {/* Cinematic Hero Section */}
       <section ref={heroRef} className="relative h-screen w-full flex items-center justify-center overflow-hidden">
         {/* Background Video/Image Placeholder */}
-        <motion.div 
+        <motion.div
           style={{ y }}
           className="absolute inset-0 z-0 scale-110"
         >
           <div className="absolute inset-0 bg-black/60 z-10" /> {/* Dark Overlay */}
-          <div 
+          <div
             className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1578593172078-0ce9fac5040e?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"
           />
         </motion.div>
@@ -69,19 +69,19 @@ export default function Home() {
               <motion.div
                 key={i}
                 className="absolute w-1 h-1 bg-white rounded-full"
-                initial={{ 
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000), 
+                initial={{
+                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
                   y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
                   opacity: Math.random()
                 }}
-                animate={{ 
+                animate={{
                   y: [null, Math.random() * 800 - 100],
                   opacity: [null, Math.random(), 0]
                 }}
-                transition={{ 
-                  duration: 10 + Math.random() * 20, 
+                transition={{
+                  duration: 10 + Math.random() * 20,
                   repeat: Infinity,
-                  ease: "linear" 
+                  ease: "linear"
                 }}
               />
             ))}
@@ -96,36 +96,36 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight tracking-tighter mb-4">
-              Moving Earth. <br />
+               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F4B400] to-yellow-200">
-                Building Tomorrow.
+                Safety. Quality. Trust.
               </span>
             </h1>
           </motion.div>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
             className="text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10 font-light"
           >
-            Professional Earth Moving &bull; Excavation &bull; Rock Breaking &bull; Heavy Equipment Rental
+            Earthwork made clear — dependable excavation, hauling, and rentals.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
-            <Link 
-              href="/request-quote" 
+            <Link
+              href="/request-quote"
               className="px-8 py-4 bg-[#F4B400] text-black font-bold uppercase tracking-wider text-sm hover:bg-[#d69f00] transition-all transform hover:-translate-y-1 w-full sm:w-auto text-center border border-transparent shadow-[0_0_20px_rgba(244,180,0,0.4)]"
             >
-              Get Free Quote
+              Request Quote
             </Link>
-            <Link 
-              href="/services" 
+            <Link
+              href="/services"
               className="px-8 py-4 bg-transparent border border-white/30 text-white font-bold uppercase tracking-wider text-sm hover:bg-white/10 hover:border-white transition-all transform hover:-translate-y-1 w-full sm:w-auto text-center"
             >
               Explore Services
@@ -134,14 +134,14 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2"
         >
           <span className="text-xs uppercase tracking-[0.2em] text-gray-400">Scroll</span>
-          <motion.div 
+          <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
             className="w-[1px] h-12 bg-gradient-to-b from-[#F4B400] to-transparent"
@@ -154,9 +154,9 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {[
-              { target: 500, label: "Projects Completed", suffix: "+" },
-              { target: 20, label: "Years Experience", suffix: "+" },
-              { target: 100, label: "Heavy Machines", suffix: "+" },
+              { target: 55, label: "Projects Completed", suffix: "+" },
+              { target: 15, label: "Years Experience", suffix: "+" },
+              { target: 45, label: "Heavy Machines", suffix: "+" },
               { target: 98, label: "Satisfaction Rate", suffix: "%" },
             ].map((stat, idx) => (
               <div key={idx} className="text-center">
@@ -185,7 +185,7 @@ export default function Home() {
               <p className="text-gray-400 text-lg mb-8 leading-relaxed">
                 Based in Hyderabad, Aadhya Earth Movers is a premier construction and earth-moving company. We specialize in providing heavy-duty excavation, rock breaking, and machinery rental services to build the infrastructure of tomorrow.
               </p>
-              
+
               <ul className="space-y-4 mb-10">
                 {[
                   "Advanced & Well-Maintained Fleet",
@@ -203,17 +203,17 @@ export default function Home() {
               </ul>
 
               <Link href="/about" className="group inline-flex items-center gap-2 text-[#F4B400] font-semibold hover:text-white transition-colors">
-                Discover Our Story 
+                Discover Our Story
                 <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            
+
             <div className="lg:w-1/2 relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-[#F4B400]/20 to-transparent blur-3xl -z-10 rounded-full" />
               <div className="border-gradient p-1 rounded-xl overflow-hidden">
-                <img 
-                  src="/images/founder.jpg" 
-                  alt="Aadhya Earth Movers Leadership" 
+                <img
+                  src="/images/img2.jpg"
+                  alt="Aadhya Earth Movers excavation site"
                   className="w-full max-h-[550px] object-cover object-top rounded-lg shadow-2xl"
                 />
               </div>
@@ -221,7 +221,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
       {/* Call to Action */}
       <section className="py-20 relative bg-[#F4B400]">
         <div className="container mx-auto px-6 text-center">
@@ -229,8 +229,8 @@ export default function Home() {
           <p className="text-black/80 text-xl max-w-2xl mx-auto mb-10">
             Contact us today for a free consultation and get the best earth-moving solutions tailored for your needs.
           </p>
-          <Link 
-            href="/contact" 
+          <Link
+            href="/contact"
             className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-bold uppercase tracking-wider text-sm hover:bg-gray-900 transition-colors shadow-xl"
           >
             <Phone size={20} /> Contact Us Now
