@@ -27,13 +27,28 @@ export default function ContactPage() {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setSubmitError("");
+    setSubmitSuccess(false);
+
     try {
-      await api.post("/contact", data);
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(resData.error || "Failed to send message.");
+      }
+
       setSubmitSuccess(true);
       reset();
-      setTimeout(() => setSubmitSuccess(false), 5000);
+      setTimeout(() => setSubmitSuccess(false), 7000);
     } catch (error) {
-      setSubmitError("Failed to send message. Please try again.");
+      setSubmitError(error.message || "Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -134,7 +149,7 @@ export default function ContactPage() {
                     exit={{ opacity: 0 }}
                     className="bg-[#16A34A]/20 border border-[#16A34A] text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-2 text-xs sm:text-sm font-medium"
                   >
-                    <CheckCircle2 size={18} /> Message sent successfully!
+                    <CheckCircle2 size={18} /> Thank you! Your message has been sent successfully. Our team will contact you shortly.
                   </motion.div>
                 )}
                 {submitError && (
@@ -195,13 +210,29 @@ export default function ContactPage() {
                   {errors.message && <p className="text-rose-400 text-xs mt-1">{errors.message.message}</p>}
                 </div>
 
-                <button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full sm:w-auto bg-[#F4B400] text-black font-bold uppercase tracking-wider text-xs sm:text-sm px-8 py-3.5 rounded-xl hover:bg-[#d69f00] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 min-h-[48px] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
-                >
-                  <Send size={16} /> {isSubmitting ? "Sending..." : "Send Message"}
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto bg-[#F4B400] text-black font-bold uppercase tracking-wider text-xs sm:text-sm px-8 py-3.5 rounded-xl hover:bg-[#d69f00] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 min-h-[48px] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
+                  >
+                    <Send size={16} /> {isSubmitting ? "Sending..." : "Send Message"}
+                  </button>
+                  <a
+                    href="https://wa.me/918499014721"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto bg-[#25D366] text-black font-bold uppercase tracking-wider text-xs sm:text-sm px-6 py-3.5 rounded-xl hover:bg-[#20bd5a] active:scale-[0.98] transition-all flex items-center justify-center gap-2 min-h-[48px] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
+                  >
+                    💬 Chat on WhatsApp
+                  </a>
+                  <a
+                    href="tel:+918499014721"
+                    className="w-full sm:w-auto bg-white/10 text-white font-bold uppercase tracking-wider text-xs sm:text-sm px-6 py-3.5 rounded-xl hover:bg-white/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 min-h-[48px] border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    📞 Call Now
+                  </a>
+                </div>
               </form>
             </div>
           </motion.div>

@@ -76,59 +76,70 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
-              Navigation
+              Quick Links
             </h2>
-            <ul className="space-y-2 text-xs sm:text-sm">
+            <ul className="space-y-1.5 text-xs sm:text-sm">
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
-                  About Company
+                <Link href="/" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
-                  Services & Fleet
+                <Link href="/about" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                  About
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
-                  Featured Projects
+                <Link href="/services" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                  Services
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
-                  Media & Site Photos
+                <Link href="/projects" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                  Projects
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
-                  Careers & Hiring
+                <Link href="/gallery" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                  Gallery
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-300 hover:text-[#F4B400] transition-colors inline-block py-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#F4B400] rounded">
+                  Contact
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Contact Information */}
           <div>
             <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
-              Direct Contact
+              Contact Information
             </h2>
-            <ul className="space-y-3 text-xs sm:text-sm">
+            <ul className="space-y-2.5 text-xs sm:text-sm">
               <li className="flex items-start gap-2.5">
                 <MapPin className="text-[#F4B400] mt-0.5 shrink-0" size={17} />
                 <span className="text-gray-300 leading-snug">
-                  Near Outer Ring Road, Hyderabad, Telangana, India
+                  Hyderabad, Telangana
                 </span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="text-[#F4B400] shrink-0" size={17} />
                 <a href="tel:+918179675631" className="text-gray-300 hover:text-white transition-colors py-0.5">
-                  +91 81796 75631
+                  +91 8179675631
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="text-[#F4B400] shrink-0" size={17} />
                 <a href="tel:+918008543529" className="text-gray-300 hover:text-white transition-colors py-0.5">
-                  +91 80085 43529
+                  +91 8008543529
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <span className="text-[#25D366] text-base shrink-0 font-bold">📱</span>
+                <a href="https://wa.me/918499014721" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#25D366] transition-colors py-0.5">
+                  WhatsApp: +91 8499014721
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
@@ -140,43 +151,50 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Business Hours */}
           <div>
             <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
-              Updates
+              Business Hours
             </h2>
-            <p className="text-xs sm:text-sm text-gray-300 mb-4 leading-relaxed">
-              Get updates on equipment availability and ongoing site operations.
-            </p>
-            {subscribed ? (
-              <div className="flex items-center gap-2 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs sm:text-sm">
-                <CheckCircle2 size={16} />
-                <span>Thank you! Subscribed successfully.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
-                <div className="relative">
+            <div className="space-y-2 text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
+              <p className="flex justify-between border-b border-white/5 pb-1.5">
+                <span className="font-medium text-white">Monday – Saturday</span>
+                <span className="text-gray-400">6:00 AM – 10:00 PM</span>
+              </p>
+              <p className="flex justify-between pt-1">
+                <span className="font-medium text-white">Sunday</span>
+                <span className="text-rose-400 font-semibold">Closed</span>
+              </p>
+            </div>
+
+            <div className="pt-2">
+              {subscribed ? (
+                <div className="flex items-center gap-2 p-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs">
+                  <CheckCircle2 size={16} />
+                  <span>Thank you! Subscribed.</span>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex gap-2">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm focus:outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-colors min-h-[44px]"
+                    placeholder="Enter email for updates"
+                    className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 px-3 py-2 rounded-xl text-xs focus:outline-none focus:border-[#F4B400] focus:ring-1 focus:ring-[#F4B400] transition-colors"
                     required
-                    aria-label="Email address for newsletter"
+                    aria-label="Email address for updates"
                   />
-                </div>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="sm"
-                  rightIcon={<ArrowRight size={16} />}
-                  className="w-full uppercase font-bold text-xs tracking-wider min-h-[44px]"
-                >
-                  Subscribe
-                </Button>
-              </form>
-            )}
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="sm"
+                    className="uppercase font-bold text-[10px] tracking-wider px-3"
+                  >
+                    Join
+                  </Button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
 
@@ -185,12 +203,15 @@ export default function Footer() {
           <p className="text-center sm:text-left">
             &copy; {new Date().getFullYear()} Aadhya Earth Movers. All rights reserved.
           </p>
-          <div className="flex gap-4 sm:gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             <Link href="/privacy-policy" className="hover:text-white transition-colors py-1">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white transition-colors py-1">
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors py-1">
               Terms & Conditions
+            </Link>
+            <Link href="/disclaimer" className="hover:text-white transition-colors py-1">
+              Disclaimer
             </Link>
           </div>
         </div>
