@@ -46,6 +46,25 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  const handleNavClick = (e, href) => {
+    setIsMobileMenuOpen(false);
+
+    const [targetPath, hash] = href.split("#");
+    const isCurrentPage = pathname === targetPath || (targetPath === "" && pathname === "/");
+
+    if (isCurrentPage) {
+      e.preventDefault();
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
@@ -145,7 +164,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-[60px] z-40 bg-[#0A0A0A]/95 backdrop-blur-2xl border-t border-white/10 flex flex-col p-5 sm:p-6 overflow-y-auto lg:hidden"
+              className="fixed inset-0 top-[60px] z-50 bg-[#0A0A0A]/95 backdrop-blur-2xl border-t border-white/10 flex flex-col p-5 sm:p-6 overflow-y-auto overscroll-contain touch-pan-y lg:hidden"
             >
               <div className="flex flex-col gap-2.5 mt-2">
                 {navLinks.map((link) => {
@@ -155,12 +174,12 @@ export default function Navbar() {
                     <Link
                       key={link.name}
                       href={link.href}
-                      className={`text-base sm:text-lg font-semibold tracking-wide uppercase px-4 py-3 rounded-xl border min-h-[48px] flex items-center transition-colors ${
+                      className={`text-base sm:text-lg font-semibold tracking-wide uppercase px-4 py-3 rounded-xl border min-h-[48px] flex items-center transition-colors touch-manipulation cursor-pointer select-none ${
                         isActive
                           ? "bg-[#F4B400]/10 border-[#F4B400]/40 text-[#F4B400]"
                           : "border-white/5 text-gray-200 hover:bg-white/5 hover:text-white"
                       }`}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={(e) => handleNavClick(e, link.href)}
                       aria-current={isActive ? "page" : undefined}
                     >
                       {link.name}
@@ -170,8 +189,8 @@ export default function Navbar() {
                 <div className="pt-5 border-t border-white/10 mt-2">
                   <Link
                     href="/request-quote"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="block w-full"
+                    onClick={(e) => handleNavClick(e, "/request-quote")}
+                    className="block w-full touch-manipulation cursor-pointer select-none"
                   >
                     <Button
                       variant="primary"

@@ -137,7 +137,7 @@ export default function AboutPage() {
                 <p className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold">Years Experience</p>
               </div>
               <div className="bg-[#0A0A0A] p-4 sm:p-6 rounded-xl border border-white/10 text-center">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-[#F4B400] mb-1 sm:mb-2">250+</h4>
+                <h4 className="text-3xl sm:text-4xl font-extrabold text-[#F4B400] mb-1 sm:mb-2">55+</h4>
                 <p className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold">Projects Completed</p>
               </div>
               <div className="bg-[#0A0A0A] p-4 sm:p-6 rounded-xl border border-white/10 text-center">
@@ -202,6 +202,32 @@ export default function AboutPage() {
                 <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-tight">{stat.label}</div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Founders Section */}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-16 sm:mb-20">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-4xl font-bold mb-3 text-white">Founders</h2>
+          <p className="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto">Meet the founders who started Aadhya Earth Movers.</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 items-start">
+          <div className="bg-[#141414] p-6 sm:p-8 rounded-2xl border border-white/10 text-center">
+            <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full bg-black/40">
+              <img src="/images/pawan-kalyan.jpg" alt="Pawan Kalyan Varikuppala" className="w-full h-full object-cover object-center" />
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white">Pawan Kalyan Varikuppala</h3>
+            <p className="text-sm text-gray-300 mt-1">Founder</p>
+          </div>
+
+          <div className="bg-[#141414] p-6 sm:p-8 rounded-2xl border border-white/10 text-center">
+            <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full bg-black/40">
+              <img src="/images/prashanth-varikuppala.jpg" alt="Prashanth Varikuppala" className="w-full h-full object-cover object-center" />
+            </div>
+            <h3 className="text-lg sm:text-xl font-bold text-white">Prashanth Varikuppala</h3>
+            <p className="text-sm text-gray-300 mt-1">Founder</p>
           </div>
         </div>
       </section>

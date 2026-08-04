@@ -113,8 +113,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold text-sm sm:text-base mb-1">Email</h4>
-                    <p className="text-gray-300 text-xs sm:text-sm">prashanthvk@gmail.com</p>
-                    <p className="text-gray-300 text-xs sm:text-sm">sales@aadhyaearthmovers.com</p>
+                    <p className="text-gray-300 text-xs sm:text-sm">prashanthvk494@gmail.com</p>
+                    {/* <p className="text-gray-300 text-xs sm:text-sm">sales@aadhyaearthmovers.com</p> */}
                   </div>
                 </div>
 

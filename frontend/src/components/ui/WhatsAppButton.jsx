@@ -11,7 +11,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with Aadhya Earth Movers on WhatsApp"
-      className="fixed bottom-6 right-6 z-50 group flex items-center justify-center focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/50 rounded-full"
+      className="fixed bottom-6 right-6 z-40 group flex items-center justify-center focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/50 rounded-full"
     >
       {/* Outer Pulse Ring */}
       <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75 animate-ping duration-1000" />
