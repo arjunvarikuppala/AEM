@@ -121,7 +121,7 @@ export default function Home() {
               href="/request-quote"
               className="px-7 py-3.5 bg-[#F4B400] text-black font-bold uppercase tracking-wider text-xs sm:text-sm hover:bg-[#d69f00] active:scale-[0.98] transition-all transform rounded-xl w-full sm:w-auto text-center border border-transparent shadow-[0_4px_20px_rgba(244,180,0,0.3)] min-h-[48px] flex items-center justify-center"
             >
-              Request Quote
+              Book Appointment
             </Link>
             <Link
               href="/services"

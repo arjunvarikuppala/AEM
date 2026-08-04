@@ -6,7 +6,7 @@ import { CheckCircle2, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import api from "@/lib/axios";
 
-export default function RequestQuotePage() {
+export default function BookAppointmentPage() {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +45,7 @@ export default function RequestQuotePage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight"
         >
-          Request a <span className="text-[#F4B400]">Quote</span>
+          Book an <span className="text-[#F4B400]">Appointment</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -53,7 +53,7 @@ export default function RequestQuotePage() {
           transition={{ delay: 0.1 }}
           className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto font-normal leading-relaxed"
         >
-          Tell us about your project and we'll provide a comprehensive estimate tailored to your needs.
+          Tell us about your project and preferred schedule — we will contact you to confirm the appointment.
         </motion.p>
       </section>
 
@@ -210,7 +210,7 @@ export default function RequestQuotePage() {
                         disabled={isSubmitting}
                         className="bg-[#16A34A] text-white px-6 sm:px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-emerald-700 active:scale-[0.98] transition-all flex items-center gap-2 shadow-[0_4px_20px_rgba(22,163,74,0.4)] disabled:opacity-50 min-h-[48px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                       >
-                        {isSubmitting ? "Submitting..." : "Submit Request"} <CheckCircle2 size={18} />
+                        {isSubmitting ? "Booking..." : "Book Appointment"} <CheckCircle2 size={18} />
                       </button>
                     )}
                   </div>
@@ -231,15 +231,15 @@ export default function RequestQuotePage() {
                 >
                   <CheckCircle2 size={42} className="text-emerald-400" />
                 </motion.div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-snug">Request Received!</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-snug">Appointment Booked!</h3>
                 <p className="text-gray-300 text-sm sm:text-base mb-8 max-w-md mx-auto leading-relaxed">
-                  Thank you for considering Aadhya Earth Movers. Our team will review your requirements and get back to you within 24 hours.
+                  Thank you — your appointment request has been received. Our team will contact you shortly to confirm the booking.
                 </p>
                 <button 
                   onClick={() => { setIsSubmitted(false); setStep(1); }}
                   className="text-[#F4B400] font-semibold border border-[#F4B400]/40 px-6 py-3 hover:bg-[#F4B400] hover:text-black active:scale-[0.98] transition-colors rounded-xl text-xs uppercase tracking-wider min-h-[44px]"
                 >
-                  Submit Another Request
+                  Book Another Appointment
                 </button>
               </motion.div>
             )}

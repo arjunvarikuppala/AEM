@@ -31,6 +31,12 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${inter.variable} ${outfit.variable} h-full antialiased dark`}
     >
+      <head>
+        <link rel="icon" href="/images/aem-logo.jpeg" sizes="32x32" type="image/jpeg" />
+        <link rel="shortcut icon" href="/images/aem-logo.jpeg" />
+        <link rel="apple-touch-icon" href="/images/aem-logo-white-transparent.png" />
+        <meta name="theme-color" content="#0A0A0A" />
+      </head>
       <body className="min-h-full flex flex-col bg-[#0A0A0A] text-white">
         {children}
       </body>

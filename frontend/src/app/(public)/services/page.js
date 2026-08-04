@@ -245,7 +245,7 @@ export default function ServicesPage() {
                     <Link 
                       href="/request-quote" 
                       className="px-4 py-3 bg-[#F4B400] text-black hover:bg-[#d99f00] active:scale-[0.98] text-xs font-bold rounded-xl transition-all flex items-center justify-center min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F4B400]"
-                      title="Request Quote"
+                      title="Book Appointment"
                     >
                       <ArrowRight size={18} />
                     </Link>
@@ -324,9 +324,9 @@ export default function ServicesPage() {
                 <div className="flex flex-col xs:flex-row gap-3 pt-2">
                   <Link 
                     href="/request-quote"
-                    className="flex-1 text-center py-3.5 bg-[#F4B400] text-black font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-[#d69f00] active:scale-[0.98] transition-colors shadow-lg min-h-[48px] flex items-center justify-center"
+                    className="flex-1 text-center py-3.5 bg-[#F4B400] text-black font-bold uppercase tracking-wider text-xs rounded-xl hover:bg-[#d99f00] active:scale-[0.98] transition-colors shadow-lg min-h-[48px] flex items-center justify-center"
                   >
-                    Book Service Now
+                    Book Appointment
                   </Link>
                   <button 
                     onClick={() => setSelectedService(null)}

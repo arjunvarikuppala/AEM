@@ -138,7 +138,7 @@ export default function Navbar() {
               rightIcon={<ArrowUpRight size={16} />}
               className="ml-2 font-bold tracking-wider uppercase text-xs"
             >
-              Get Quote
+              Book Appointment
             </Button>
           </Link>
         </nav>
@@ -197,7 +197,7 @@ export default function Navbar() {
                       size="lg"
                       className="w-full min-h-[48px] font-bold uppercase tracking-wider justify-center"
                     >
-                      Get Quote
+                        Book Appointment
                     </Button>
                   </Link>
                 </div>
