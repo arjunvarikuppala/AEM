@@ -1,5 +1,6 @@
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import { siteUrl, siteName, defaultDescription, defaultKeywords, defaultImage } from "@/lib/seo";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -13,16 +14,102 @@ const outfit = Outfit({
 
 export const metadata = {
   title: "Aadhya Earth Movers | Professional Earth Moving & Construction",
-  description: "Premium earth moving, excavation, rock breaking, road construction, and heavy equipment rental services in Hyderabad, India.",
-  keywords: "earth moving, excavation, rock breaking, road construction, heavy equipment rental, Hyderabad",
+  description: defaultDescription,
+  keywords: defaultKeywords,
+  metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Aadhya Earth Movers",
-    description: "Premium earth moving and construction services.",
-    url: "https://www.aadhyaearthmovers.com",
-    siteName: "Aadhya Earth Movers",
+    title: "Aadhya Earth Movers | Professional Earth Moving & Construction",
+    description: defaultDescription,
+    url: siteUrl,
+    siteName,
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: `${siteUrl}${defaultImage}`,
+        width: 1200,
+        height: 630,
+        alt: `${siteName} logo`,
+        type: "image/jpeg",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aadhya Earth Movers | Professional Earth Moving & Construction",
+    description: defaultDescription,
+    images: [`${siteUrl}${defaultImage}`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": siteName,
+      "url": siteUrl,
+      "logo": `${siteUrl}${defaultImage}`,
+      "sameAs": [],
+      "email": "mailto:prashanthvk494@gmail.com",
+      "telephone": "+91 8179675631",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Shankar Nagar PLOT NO 95/P",
+        "addressLocality": "Hayatnagar",
+        "addressRegion": "Telangana",
+        "postalCode": "501505",
+        "addressCountry": "IN"
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": siteName,
+      "image": [`${siteUrl}${defaultImage}`],
+      "@id": siteUrl,
+      "url": siteUrl,
+      "telephone": "+91 8179675631",
+      "email": "mailto:prashanthvk494@gmail.com",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Shankar Nagar PLOT NO 95/P",
+        "addressLocality": "Hayatnagar",
+        "addressRegion": "Telangana",
+        "postalCode": "501505",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 17.333122,
+        "longitude": 78.616183
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "06:00",
+          "closes": "22:00"
+        }
+      ],
+      "sameAs": [],
+      "areaServed": "Hyderabad, Telangana"
+    }
+  ]
 };
 
 export default function RootLayout({ children }) {
@@ -36,6 +123,10 @@ export default function RootLayout({ children }) {
         <link rel="shortcut icon" href="/images/aem-logo.jpeg" />
         <link rel="apple-touch-icon" href="/images/aem-logo-white-transparent.png" />
         <meta name="theme-color" content="#0A0A0A" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-[#0A0A0A] text-white">
         {children}
