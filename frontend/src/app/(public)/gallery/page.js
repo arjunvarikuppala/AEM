@@ -1,4 +1,5 @@
 import { createMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import GalleryPageClient from "./page.client";
 
 export const metadata = createMetadata({
@@ -9,5 +10,10 @@ export const metadata = createMetadata({
 });
 
 export default function Page() {
-  return <GalleryPageClient />;
+  return (
+    <>
+      <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Gallery", href: "/gallery" }]} />
+      <GalleryPageClient />
+    </>
+  );
 }

@@ -1,31 +1,29 @@
-export const metadata = {
+import { createMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+
+export const metadata = createMetadata({
   title: "Privacy Policy | Aadhya Earth Movers",
   description: "Privacy Policy for Aadhya Earth Movers. Learn how we collect, use, and protect your personal information when requesting earthmoving services in Hyderabad.",
-  openGraph: {
-    title: "Privacy Policy | Aadhya Earth Movers",
-    description: "Privacy Policy for Aadhya Earth Movers earthmoving & infrastructure services.",
-    url: "https://aadhyaearthmovers.com/privacy-policy",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://aadhyaearthmovers.com/privacy-policy",
-  },
-};
+  pathname: "/privacy-policy",
+  keywords: "privacy policy, data protection, personal information, Aadhya Earth Movers, Hyderabad"
+});
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 min-h-screen">
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
-            Privacy <span className="text-[#F4B400]">Policy</span>
-          </h1>
-          <p className="text-gray-400 text-sm sm:text-base">
-            Last Updated: August 2026
-          </p>
-        </div>
+    <>
+      <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Privacy Policy", href: "/privacy-policy" }]} />
+      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 min-h-screen">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
+              Privacy <span className="text-[#F4B400]">Policy</span>
+            </h1>
+            <p className="text-gray-400 text-sm sm:text-base">
+              Last Updated: August 2026
+            </p>
+          </div>
 
-        <div className="bg-[#141414] border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl space-y-8 text-gray-300 text-sm sm:text-base leading-relaxed">
+          <div className="bg-[#141414] border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl space-y-8 text-gray-300 text-sm sm:text-base leading-relaxed">
           <section>
             <h2 className="text-xl font-bold text-white mb-3 text-[#F4B400]">
               1. Introduction
@@ -88,5 +86,6 @@ export default function PrivacyPolicyPage() {
         </div>
       </section>
     </div>
+  </>
   );
 }

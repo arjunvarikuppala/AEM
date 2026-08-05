@@ -1,21 +1,19 @@
-export const metadata = {
+import { createMetadata } from "@/lib/seo";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+
+export const metadata = createMetadata({
   title: "Terms & Conditions | Aadhya Earth Movers",
   description: "Terms and Conditions for engaging Aadhya Earth Movers earth excavation, rock breaking, road grading, and machinery services in Hyderabad.",
-  openGraph: {
-    title: "Terms & Conditions | Aadhya Earth Movers",
-    description: "Terms and Conditions for Aadhya Earth Movers equipment rental and contracting services.",
-    url: "https://aadhyaearthmovers.com/terms-and-conditions",
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://aadhyaearthmovers.com/terms-and-conditions",
-  },
-};
+  pathname: "/terms-and-conditions",
+  keywords: "terms and conditions, service agreement, Aadhya Earth Movers, equipment rental, Hyderabad"
+});
 
 export default function TermsAndConditionsPage() {
   return (
-    <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 min-h-screen">
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+    <>
+      <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Terms & Conditions", href: "/terms-and-conditions" }]} />
+      <div className="pt-24 sm:pt-28 pb-16 sm:pb-20 min-h-screen">
+        <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
         <div className="text-center mb-12">
           <h1 className="text-3xl xs:text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
             Terms &amp; <span className="text-[#F4B400]">Conditions</span>
@@ -80,5 +78,6 @@ export default function TermsAndConditionsPage() {
         </div>
       </section>
     </div>
+  </>
   );
 }

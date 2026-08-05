@@ -13,12 +13,12 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Aadhya Earth Movers | Professional Earth Moving & Construction",
+  title: "Aadhya Earth Movers | Earth Moving & Construction Services in Hyderabad",
   description: defaultDescription,
   keywords: defaultKeywords,
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "Aadhya Earth Movers | Professional Earth Moving & Construction",
+    title: "Aadhya Earth Movers | Earth Moving & Construction Services in Hyderabad",
     description: defaultDescription,
     url: siteUrl,
     siteName,
@@ -36,7 +36,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aadhya Earth Movers | Professional Earth Moving & Construction",
+    title: "Aadhya Earth Movers | Earth Moving & Construction Services in Hyderabad",
     description: defaultDescription,
     images: [`${siteUrl}${defaultImage}`],
   },
@@ -47,11 +47,22 @@ export const metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  icons: {
+    icon: [{ url: "/images/aem-logo.jpeg", type: "image/jpeg" }],
+    apple: "/images/aem-logo-white-transparent.png",
+  },
 };
 
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
+    {
+      "@type": "WebSite",
+      "name": siteName,
+      "url": siteUrl,
+      "description": defaultDescription,
+      "sameAs": []
+    },
     {
       "@type": "Organization",
       "name": siteName,
