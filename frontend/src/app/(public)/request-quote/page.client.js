@@ -31,7 +31,8 @@ export default function BookAppointmentPage() {
       setIsSubmitted(true);
       reset();
     } catch (error) {
-      setSubmitError("Failed to submit request. Please try again later.");
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || "Failed to submit request. Please try again later.";
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
