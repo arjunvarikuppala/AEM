@@ -24,7 +24,7 @@ export default function Footer() {
       aria-label="Site Footer"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-12 sm:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 mb-12 sm:mb-16">
           {/* Brand */}
           <div className="flex flex-col">
             <Link
@@ -156,52 +156,6 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Business Hours */}
-          <div>
-            <h2 className="text-white font-bold text-xs uppercase tracking-widest mb-4 sm:mb-5 border-l-2 border-[#F4B400] pl-3">
-              Business Hours
-            </h2>
-            <div className="space-y-2 text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
-              <p className="flex justify-between border-b border-white/5 pb-1.5">
-                <span className="font-medium text-white">Monday – Saturday</span>
-                <span className="text-gray-400">6:00 AM – 10:00 PM</span>
-              </p>
-              <p className="flex justify-between pt-1">
-                <span className="font-medium text-white">Sunday</span>
-                <span className="text-rose-400 font-semibold">Closed</span>
-              </p>
-            </div>
-
-            <div className="pt-2">
-              {subscribed ? (
-                <div className="flex items-center gap-2 p-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs">
-                  <CheckCircle2 size={16} />
-                  <span>Thank you! Subscribed.</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter email for updates"
-                    className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 px-3 py-2 rounded-xl text-xs focus:outline-none focus:border-[#F4B400] focus:ring-1 focus:ring-[#F4B400] transition-colors"
-                    required
-                    aria-label="Email address for updates"
-                  />
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="sm"
-                    className="uppercase font-bold text-[10px] tracking-wider px-3"
-                  >
-                    Join
-                  </Button>
-                </form>
-              )}
-            </div>
           </div>
         </div>
 
