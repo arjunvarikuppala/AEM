@@ -6,12 +6,11 @@ import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import api from "@/lib/axios";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(10, "Phone number is required"),
+  phone: z.string().refine((v) => v.replace(/\D/g, "").length >= 10, "Enter a valid phone number (at least 10 digits)"),
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 

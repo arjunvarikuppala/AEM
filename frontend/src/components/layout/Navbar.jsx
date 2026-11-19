@@ -41,10 +41,13 @@ export default function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  // Close mobile menu automatically when route changes
-  useEffect(() => {
+  // Close mobile menu automatically when route changes (adjust state during
+  // render instead of in an effect, avoiding an extra cascading render).
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setIsMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   const handleNavClick = (e, href) => {
     setIsMobileMenuOpen(false);

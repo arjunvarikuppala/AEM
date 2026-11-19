@@ -34,8 +34,12 @@ app.get('/', (req, res) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
+  // Malformed JSON bodies are a client error, not a server error.
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: 'Invalid JSON body.' });
+  }
   console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!', details: err.message });
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
 app.listen(PORT, () => {

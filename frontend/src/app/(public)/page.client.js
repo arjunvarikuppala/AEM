@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Phone, CheckCircle2 } from "lucide-react";
@@ -12,16 +12,30 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// Deterministic pseudo-random values: render stays pure and the server and
+// client produce identical markup (no hydration mismatch).
+const seeded = (i, n) => {
+  const x = Math.sin((i + 1) * 12.9898 + n * 78.233) * 43758.5453;
+  return Math.round((x - Math.floor(x)) * 100) / 100;
+};
+
+const PARTICLES = Array.from({ length: 15 }, (_, i) => ({
+  left: seeded(i, 1) * 100,
+  top: seeded(i, 2) * 100,
+  startOpacity: seeded(i, 3),
+  peakOpacity: seeded(i, 4),
+  drift: Math.round((seeded(i, 5) - 0.5) * 800),
+  duration: 10 + seeded(i, 6) * 20,
+}));
+
 export default function Home() {
   const heroRef = useRef(null);
   const statsRef = useRef(null);
-  const [isMounted, setIsMounted] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   useEffect(() => {
-    setIsMounted(true);
     // Stats Counter Animation
     const stats = document.querySelectorAll('.stat-number');
 
@@ -63,30 +77,25 @@ export default function Home() {
         </motion.div>
 
         {/* Particles Effect */}
-        {isMounted && (
-          <div className="absolute inset-0 z-10 opacity-30 pointer-events-none">
-            {[...Array(15)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white rounded-full"
-                initial={{
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-                  y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-                  opacity: Math.random()
-                }}
-                animate={{
-                  y: [null, Math.random() * 800 - 100],
-                  opacity: [null, Math.random(), 0]
-                }}
-                transition={{
-                  duration: 10 + Math.random() * 20,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-            ))}
-          </div>
-        )}
+        <div className="absolute inset-0 z-10 opacity-30 pointer-events-none" aria-hidden="true">
+          {PARTICLES.map((p, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full"
+              style={{ left: `${p.left}%`, top: `${p.top}%` }}
+              initial={{ y: 0, opacity: p.startOpacity }}
+              animate={{
+                y: [0, p.drift],
+                opacity: [p.startOpacity, p.peakOpacity, 0]
+              }}
+              transition={{
+                duration: p.duration,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
 
         {/* Hero Content */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20 text-center mt-12 sm:mt-16">

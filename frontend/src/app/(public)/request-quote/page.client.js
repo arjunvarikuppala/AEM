@@ -113,13 +113,13 @@ export default function BookAppointmentPage() {
                         </div>
                         <div>
                           <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Email Address *</label>
-                          <input type="email" {...register("email", { required: "Email is required" })} className="w-full bg-[#0A0A0A] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all min-h-[44px]" />
+                          <input type="email" {...register("email", { required: "Email is required", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" } })} className="w-full bg-[#0A0A0A] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all min-h-[44px]" />
                           {errors.email && <p className="text-rose-400 text-xs mt-1">{errors.email.message}</p>}
                         </div>
                       </div>
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Phone Number *</label>
-                        <input type="tel" {...register("phone", { required: "Phone is required" })} className="w-full bg-[#0A0A0A] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all min-h-[44px]" />
+                        <input type="tel" {...register("phone", { required: "Phone is required", validate: (v) => v.replace(/\D/g, "").length >= 10 || "Enter a valid phone number (at least 10 digits)" })} className="w-full bg-[#0A0A0A] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#F4B400] focus:ring-2 focus:ring-[#F4B400]/30 transition-all min-h-[44px]" />
                         {errors.phone && <p className="text-rose-400 text-xs mt-1">{errors.phone.message}</p>}
                       </div>
                     </motion.div>

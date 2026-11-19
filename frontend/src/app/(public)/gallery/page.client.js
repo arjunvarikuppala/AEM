@@ -4,11 +4,171 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, ChevronLeft, ChevronRight, MapPin, Tag, Play, Film } from "lucide-react";
 
+const CATEGORIES = ["All", "Excavation & Grading", "Tipper Fleet", "Drainage & Utilities", "Videos"];
+
+const GALLERY_ITEMS = [
+  {
+    id: 1,
+    type: "image",
+    src: "/images/fleet-excavator-haulage-site.jpg",
+    title: "Heavy SANY Excavator & Tipper Fleet Line-Up",
+    category: "Excavation & Grading",
+    location: "Outer Ring Road Project Site, Telangana",
+    description: "Massive fleet of SANY heavy excavators and multi-axle tippers lined up on active cut-and-fill excavation site.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 2,
+    type: "image",
+    src: "/images/rock-loading-sany-excavator.jpg",
+    title: "Heavy Rock Excavation & Tipper Loading",
+    category: "Excavation & Grading",
+    location: "Quarry & Foundation Pit Site",
+    description: "SANY heavy excavator loading massive granite boulders into multi-axle tipper dump truck.",
+    aspect: "aspect-[3/4]"
+  },
+  {
+    id: 3,
+    type: "image",
+    src: "/images/tractor-dozer-road-grading.jpg",
+    title: "Tractor Dozer Sub-Base Road Grading",
+    category: "Excavation & Grading",
+    location: "Township Sub-Base Roadway Site",
+    description: "Heavy tractor with front leveller dozer blade shaping and grading gravel sub-base for roadway construction.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 4,
+    type: "image",
+    src: "/images/pneumatic-rock-drilling.jpg",
+    title: "Pneumatic Rock Drilling & Hard Strata Excavation",
+    category: "Excavation & Grading",
+    location: "Hill Cutting Site, Telangana",
+    description: "Pneumatic jackhammer rock drilling powered by tractor compressor unit for controlled rock fracturing.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 5,
+    type: "image",
+    src: "/images/sany-excavator-grading.jpg",
+    title: "Heavy SANY Excavator Ground Leveling",
+    category: "Excavation & Grading",
+    location: "Commercial Development Site, Hyderabad",
+    description: "Deep earth excavation and cut-and-fill level preparation using SANY SY210C heavy excavator.",
+    aspect: "aspect-[4/3]"
+  },
+  {
+    id: 6,
+    type: "image",
+    src: "/images/tipper-fleet-dumping.jpg",
+    title: "Multi-Axle Tipper Fleet Unloading Operations",
+    category: "Tipper Fleet",
+    location: "Patancheru Haulage Corridor",
+    description: "Fleet of heavy tipper dump trucks discharging earth fill for roadbed foundation formation.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 7,
+    type: "image",
+    src: "/images/drainage-chamber-work.jpg",
+    title: "Concrete Catch Basin & Manhole Assembly",
+    category: "Drainage & Utilities",
+    location: "Gachibowli Utility Hub",
+    description: "Construction of RCC inspection chambers and stormwater catch basins connected with corrugated pipes.",
+    aspect: "aspect-[3/4]"
+  },
+  {
+    id: 8,
+    type: "image",
+    src: "/images/trench-pipeline-laying.jpg",
+    title: "HDPE Corrugated Pipe Trench Laying",
+    category: "Drainage & Utilities",
+    location: "Sub-Surface Utility Trench, Hyderabad",
+    description: "Dual corrugated drainage pipeline alignment with brick supports and concrete anchor bedding.",
+    aspect: "aspect-[3/4]"
+  },
+  {
+    id: 9,
+    type: "image",
+    src: "/images/asphalt-road-compaction.jpg",
+    title: "Asphalt Road Compaction & Finishing",
+    category: "Tipper Fleet",
+    location: "Tellapur Villa Township Expressway",
+    description: "Ingersoll-Rand heavy vibratory roller compaction of bituminous surface layer.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 10,
+    type: "image",
+    src: "/images/land-surveying-total-station.jpg",
+    title: "Precision Total Station Laser Surveying",
+    category: "Drainage & Utilities",
+    location: "Financial District High-Rise Sector",
+    description: "High-precision optical & laser leveling, structural column grid alignment, and benchmark setting.",
+    aspect: "aspect-[4/3]"
+  },
+  {
+    id: 11,
+    type: "image",
+    src: "/images/deep-foundation-rock-grouting.jpg",
+    title: "Deep Pit Excavation & Rock Anchor Grouting",
+    category: "Excavation & Grading",
+    location: "Knowledge City Commercial Complex",
+    description: "Pit slope stabilization, rock anchor hole drilling, and cement grouting supported by heavy excavators.",
+    aspect: "aspect-[4/3]"
+  },
+  {
+    id: 12,
+    type: "image",
+    src: "/images/asphalt-paver-laying.jpg",
+    title: "Bituminous Asphalt Paver Operations",
+    category: "Tipper Fleet",
+    location: "Neopolis Expressway Link",
+    description: "Automated hot-mix asphalt paver operations, edge grading, and smooth surface leveling.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 13,
+    type: "video",
+    src: "/videos/site-operations-demo.mp4",
+    poster: "/images/fleet-excavator-haulage-site.jpg",
+    title: "Heavy Machinery & Fleet Operations Video Reel",
+    category: "Videos",
+    location: "Outer Ring Road Sector, Hyderabad",
+    description: "On-site video capturing heavy excavation, tipper fleet haulage, and ground grading operations in real time.",
+    aspect: "aspect-[16/9]"
+  },
+  {
+    id: 14,
+    type: "video",
+    src: "/videos/whatsapp-video-2026-07-28-at-5.03.06-pm.mp4",
+    poster: "/images/rock-loading-sany-excavator.jpg",
+    title: "Heavy Rock Loading Action Recording",
+    category: "Videos",
+    location: "Quarry & Foundation Excavation Site",
+    description: "Action video recording of SANY excavator loading heavy granite boulders into multi-axle dump trucks.",
+    aspect: "aspect-[4/3]"
+  },
+  {
+    id: 15,
+    type: "video",
+    src: "/videos/road-grading-demo.mp4",
+    poster: "/images/tractor-dozer-road-grading.jpg",
+    title: "Sub-Base Roadway Leveling Sequence",
+    category: "Videos",
+    location: "Township Sub-Base Roadway Site",
+    description: "Field video footage showing tractor blade leveller shaping sub-base gravel for road construction.",
+    aspect: "aspect-[16/9]"
+  }
+];
+
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const categories = ["All", "Excavation & Grading", "Tipper Fleet", "Drainage & Utilities", "Videos"];
+  const filteredImages = activeCategory === "All" 
+    ? GALLERY_ITEMS 
+    : GALLERY_ITEMS.filter(item => item.category === activeCategory);
 
   // Keyboard navigation & body scroll lock for Lightbox
   useEffect(() => {
@@ -34,167 +194,7 @@ export default function GalleryPage() {
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selectedIndex]);
-
-  const galleryItems = [
-    {
-      id: 1,
-      type: "image",
-      src: "/images/fleet-excavator-haulage-site.jpg",
-      title: "Heavy SANY Excavator & Tipper Fleet Line-Up",
-      category: "Excavation & Grading",
-      location: "Outer Ring Road Project Site, Telangana",
-      description: "Massive fleet of SANY heavy excavators and multi-axle tippers lined up on active cut-and-fill excavation site.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 2,
-      type: "image",
-      src: "/images/rock-loading-sany-excavator.jpg",
-      title: "Heavy Rock Excavation & Tipper Loading",
-      category: "Excavation & Grading",
-      location: "Quarry & Foundation Pit Site",
-      description: "SANY heavy excavator loading massive granite boulders into multi-axle tipper dump truck.",
-      aspect: "aspect-[3/4]"
-    },
-    {
-      id: 3,
-      type: "image",
-      src: "/images/tractor-dozer-road-grading.jpg",
-      title: "Tractor Dozer Sub-Base Road Grading",
-      category: "Excavation & Grading",
-      location: "Township Sub-Base Roadway Site",
-      description: "Heavy tractor with front leveller dozer blade shaping and grading gravel sub-base for roadway construction.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 4,
-      type: "image",
-      src: "/images/pneumatic-rock-drilling.jpg",
-      title: "Pneumatic Rock Drilling & Hard Strata Excavation",
-      category: "Excavation & Grading",
-      location: "Hill Cutting Site, Telangana",
-      description: "Pneumatic jackhammer rock drilling powered by tractor compressor unit for controlled rock fracturing.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 5,
-      type: "image",
-      src: "/images/sany-excavator-grading.jpg",
-      title: "Heavy SANY Excavator Ground Leveling",
-      category: "Excavation & Grading",
-      location: "Commercial Development Site, Hyderabad",
-      description: "Deep earth excavation and cut-and-fill level preparation using SANY SY210C heavy excavator.",
-      aspect: "aspect-[4/3]"
-    },
-    {
-      id: 6,
-      type: "image",
-      src: "/images/tipper-fleet-dumping.jpg",
-      title: "Multi-Axle Tipper Fleet Unloading Operations",
-      category: "Tipper Fleet",
-      location: "Patancheru Haulage Corridor",
-      description: "Fleet of heavy tipper dump trucks discharging earth fill for roadbed foundation formation.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 7,
-      type: "image",
-      src: "/images/drainage-chamber-work.jpg",
-      title: "Concrete Catch Basin & Manhole Assembly",
-      category: "Drainage & Utilities",
-      location: "Gachibowli Utility Hub",
-      description: "Construction of RCC inspection chambers and stormwater catch basins connected with corrugated pipes.",
-      aspect: "aspect-[3/4]"
-    },
-    {
-      id: 8,
-      type: "image",
-      src: "/images/trench-pipeline-laying.jpg",
-      title: "HDPE Corrugated Pipe Trench Laying",
-      category: "Drainage & Utilities",
-      location: "Sub-Surface Utility Trench, Hyderabad",
-      description: "Dual corrugated drainage pipeline alignment with brick supports and concrete anchor bedding.",
-      aspect: "aspect-[3/4]"
-    },
-    {
-      id: 9,
-      type: "image",
-      src: "/images/asphalt-road-compaction.jpg",
-      title: "Asphalt Road Compaction & Finishing",
-      category: "Tipper Fleet",
-      location: "Tellapur Villa Township Expressway",
-      description: "Ingersoll-Rand heavy vibratory roller compaction of bituminous surface layer.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 10,
-      type: "image",
-      src: "/images/land-surveying-total-station.jpg",
-      title: "Precision Total Station Laser Surveying",
-      category: "Drainage & Utilities",
-      location: "Financial District High-Rise Sector",
-      description: "High-precision optical & laser leveling, structural column grid alignment, and benchmark setting.",
-      aspect: "aspect-[4/3]"
-    },
-    {
-      id: 11,
-      type: "image",
-      src: "/images/deep-foundation-rock-grouting.jpg",
-      title: "Deep Pit Excavation & Rock Anchor Grouting",
-      category: "Excavation & Grading",
-      location: "Knowledge City Commercial Complex",
-      description: "Pit slope stabilization, rock anchor hole drilling, and cement grouting supported by heavy excavators.",
-      aspect: "aspect-[4/3]"
-    },
-    {
-      id: 12,
-      type: "image",
-      src: "/images/asphalt-paver-laying.jpg",
-      title: "Bituminous Asphalt Paver Operations",
-      category: "Tipper Fleet",
-      location: "Neopolis Expressway Link",
-      description: "Automated hot-mix asphalt paver operations, edge grading, and smooth surface leveling.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 13,
-      type: "video",
-      src: "/videos/site-operations-demo.mp4",
-      poster: "/images/fleet-excavator-haulage-site.jpg",
-      title: "Heavy Machinery & Fleet Operations Video Reel",
-      category: "Videos",
-      location: "Outer Ring Road Sector, Hyderabad",
-      description: "On-site video capturing heavy excavation, tipper fleet haulage, and ground grading operations in real time.",
-      aspect: "aspect-[16/9]"
-    },
-    {
-      id: 14,
-      type: "video",
-      src: "/videos/whatsapp-video-2026-07-28-at-5.03.06-pm.mp4",
-      poster: "/images/rock-loading-sany-excavator.jpg",
-      title: "Heavy Rock Loading Action Recording",
-      category: "Videos",
-      location: "Quarry & Foundation Excavation Site",
-      description: "Action video recording of SANY excavator loading heavy granite boulders into multi-axle dump trucks.",
-      aspect: "aspect-[4/3]"
-    },
-    {
-      id: 15,
-      type: "video",
-      src: "/videos/road-grading-demo.mp4",
-      poster: "/images/tractor-dozer-road-grading.jpg",
-      title: "Sub-Base Roadway Leveling Sequence",
-      category: "Videos",
-      location: "Township Sub-Base Roadway Site",
-      description: "Field video footage showing tractor blade leveller shaping sub-base gravel for road construction.",
-      aspect: "aspect-[16/9]"
-    }
-  ];
-
-  const filteredImages = activeCategory === "All" 
-    ? galleryItems 
-    : galleryItems.filter(item => item.category === activeCategory);
+  }, [selectedIndex, filteredImages.length]);
 
   const handlePrev = (e) => {
     e.stopPropagation();
@@ -238,8 +238,8 @@ export default function GalleryPage() {
           transition={{ delay: 0.2 }}
           className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8"
         >
-          {categories.map((cat) => {
-            const count = cat === "All" ? galleryItems.length : galleryItems.filter(i => i.category === cat).length;
+          {CATEGORIES.map((cat) => {
+            const count = cat === "All" ? GALLERY_ITEMS.length : GALLERY_ITEMS.filter(i => i.category === cat).length;
             return (
               <button
                 key={cat}
